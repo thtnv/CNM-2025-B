@@ -28,4 +28,19 @@ class TaskController extends Controller
 
         return TaskResource::apiPaginate($tasks, $request);
     }
+
+    public function destroy($id)
+    {
+        $task = Task::find($id);
+        if (!$task) {
+            return response()->json([
+                'message' => 'Task not found',
+            ], 404);
+        }
+        $task->delete();
+        return response()->json([
+            'message' => 'Delete success',
+            'data' => new TaskResource($task),
+        ]);
+    }
 }
