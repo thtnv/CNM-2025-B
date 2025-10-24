@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Task\CreateRequest;
+use App\Http\Requests\Task\UpdateRequest;
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
 use Illuminate\Http\Request;
@@ -37,5 +38,18 @@ class TaskController extends Controller
             'message' => 'Task deleted successfully',
             'code' => 200
         ]);
+    }
+
+    public function show(Task $task)
+    {
+        return new TaskResource($task);
+    }
+
+    public function update(Task $task, UpdateRequest $request)
+    {
+        $userInput = $request->validated();
+        $task->update($userInput);
+
+        return new TaskResource($task);
     }
 }
