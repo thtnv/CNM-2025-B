@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -18,6 +19,12 @@ use function Symfony\Component\String\b;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::get('user', [AuthController::class, 'getProfile']);
+});
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
