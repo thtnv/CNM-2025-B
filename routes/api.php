@@ -21,9 +21,10 @@ use function Symfony\Component\String\b;
 */
 
 Route::post('register', [AuthController::class, 'register']);
-Route::post('login', [AuthController::class, 'login']);
+Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::get('user', [AuthController::class, 'getProfile']);
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::get('user', [AuthController::class, 'getProfile']);   
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
